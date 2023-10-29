@@ -1,0 +1,16 @@
+# tmux
+alias tma='tmux a'
+alias tmat='tmux a -t'
+alias tml='tmux ls'
+# vim
+alias vim='nvim'
+alias v='vim'
+# apt
+alias sai='sudo apt install'
+alias saiy='sudo apt install -y'
+alias ssi='sudo snap install'
+# ls
+alias ls='ls -alF --color=auto'
+# python
+alias ve='python3 -m venv ./venv'
+alias va='source ./venv/bin/activate'

@@ -1,0 +1,16 @@
+[commit]
+        gpgsign = true
+[user]
+        email = cycle.five@proton.me
+        name = Cycle Five
+[core]
+        editor = vim
+[filter "lfs"]
+        process = git-lfs filter-process
+        required = true
+        clean = git-lfs clean -- %f
+        smudge = git-lfs smudge -- %f
+[credential]
+        helper = store
+[init]
+        defaultBranch = master
