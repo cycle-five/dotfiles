@@ -1,6 +1,15 @@
-# ~/.bashrc: executed by bash(1) for non-login shells.
-# see /usr/share/doc/bash/examples/startup-files (in the package bash-doc)
-# for examples
+#
+# cycle-five .bashrc
+#
+# I mostly stole this from the default Ubuntu one, which I find mostly
+# has some sane defaults and things I find necessary. Mainly infinite
+# (almost) history, aliases, and path configs for stuff I install all
+# the time.
+#
+
+#
+# { This section is basically entirely ripped from the ubuntu .bashrc
+#
 
 # If not running interactively, don't do anything
 case $- in
@@ -10,10 +19,6 @@ esac
 
 # append to the history file, don't overwrite it
 shopt -s histappend
-
-# for setting history length see HISTSIZE and HISTFILESIZE in bash(1)
-HISTSIZE=1000000000
-HISTFILESIZE=2000000000
 
 # check the window size after each command and, if necessary,
 # update the values of LINES and COLUMNS.
@@ -113,10 +118,11 @@ if ! shopt -oq posix; then
 fi
 
 #
-# My stuff
+# } My stuff
 #
 
-# My aliases
+# My aliases, I want to use .aliases instead of .bash_aliases because I will
+# want to switch to zsh at some point.
 if [ -f ~/.aliases ]; then
     . ~/.aliases
 fi
@@ -125,23 +131,25 @@ fi
 # ---------------------
 # Undocumented feature which sets the size to "unlimited".
 # http://stackoverflow.com/questions/9457233/unlimited-bash-history
-export HISTFILESIZE=1000000000
 export HISTSIZE=1000000000
+export HISTFILESIZE=1000000000
 export HISTTIMEFORMAT="[%F %T] "
 # Change the file location because certain bash sessions truncate .bash_history file upon close.
 # http://superuser.com/questions/575479/bash-history-truncated-to-500-lines-on-each-login
-export HISTFILE=~/.bash_eternal_history
+export HISTFILE="$HOME/.bash_eternal_history"
 # Force prompt to write history after every command.
 # http://superuser.com/questions/20900/bash-history-loss
 export PROMPT_COMMAND="history -a; $PROMPT_COMMAND"
+
+# Common user installed bin location
 export PATH="$HOME/.local/bin:$PATH"
+
+# Rust
 export PATH="$HOME/.cargo/bin:$PATH"
+. "$HOME/.cargo/env"
 
 # Haskell
 [ -f "$HOME/.ghcup/env" ] && source "$HOME/.ghcup/env" # ghcup-env
-
-# Rust
-. "$HOME/.cargo/env"
 
 #
 # env variables for Twitter API
@@ -157,6 +165,8 @@ export API_SECRET="..."
 #
 export DISCORD_TOKEN="..."
 export GUILD_ID="..."
+
+# ChatGPT
 export OPENAI_KEY="..."
 
 #
@@ -165,31 +175,14 @@ export OPENAI_KEY="..."
 export SPOTIFY_CLIENT_ID="..."
 export SPOTIFY_CLIENT_SECRET="..."
 
-# Anacanda
-# >>> conda initialize >>>
-# !! Contents within this block are managed by 'conda init' !!
-__conda_setup="$($HOME'/anaconda3/bin/conda' 'shell.bash' 'hook' 2> /dev/null)"
-if [ $? -eq 0 ]; then
-    eval "$__conda_setup"
-else
-    if [ -f "$HOME/anaconda3/etc/profile.d/conda.sh" ]; then
-        . "$HOME/anaconda3/etc/profile.d/conda.sh"
-    else
-        export PATH="/home/lothrop/anaconda3/bin:$PATH"
-    fi
-fi
-unset __conda_setup
-# <<< conda initialize <<<
-
-# Personal bins
-export PATH="$HOME/bin:$PATH"
-export PATH="$HOME/.bin:$PATH"
-
-# oracle cloud cli
-# [[ -e "$HOME/lib/oracle-cli/lib/python3.10/site-packages/oci_cli/bin/oci_autocomplete.sh" ]] && source "$HOME/lib/oracle-cli/lib/python3.10/site-packages/oci_cli/bin/oci_autocomplete.sh"
-
- 
+# old gcc
 # export PATH=$PATH:/opt/gcc-arm-none-eabi/bin
 
 # Go
-export PATH=$PATH:/usr/local/go/bin
+export PATH="${PATH}:/usr/local/go/bin"
+
+# Personal bins, these go last in the file and first in the path
+export PATH="$HOME/bin:$PATH"
+export PATH="$HOME/.bin:$PATH"
+
+

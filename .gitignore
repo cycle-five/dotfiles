@@ -1,0 +1,10 @@
+# C
+a.out
+
+# Rust build artifacts
+/target/
+/*/target/
+
+# IDE config
+.vscode/
+
