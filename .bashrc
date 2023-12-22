@@ -49,16 +49,16 @@ colors() {
 # Change the window title of X terminals
 case ${TERM} in
         xterm*|rxvt*|Eterm*|aterm|kterm|gnome*|interix|konsole*)
-                PROMPT_COMMAND='echo -ne "\033]0;${USER}@${HOSTNAME%%.*}:${PWD/#$HOME/\~}\007"'
+                PROMPT_COMMAND='echo -ne "\033]0;${USER}\\u5350${HOSTNAME%%.*}:${PWD/#$HOME/\~}\007"'
                 ;;
         screen*)
-                PROMPT_COMMAND='echo -ne "\033_${USER}@${HOSTNAME%%.*}:${PWD/#$HOME/\~}\033\\"'
+                PROMPT_COMMAND='echo -ne "\033_${USER}\\u5350${HOSTNAME%%.*}:${PWD/#$HOME/\~}\033"'
                 ;;
 esac
 
 use_color=true
 
-# Set colorful PS1 only on colorful terminals.
+# Set colorful PS1 only on colorful terminals
 # dircolors --print-database uses its own built-in database
 # instead of using /etc/DIR_COLORS.  Try to use the external file
 # first to take advantage of user additions.  Use internal bash
@@ -85,7 +85,7 @@ if ${use_color} ; then
         if [[ ${EUID} == 0 ]] ; then
                 PS1='\[\033[01;31m\][\h\[\033[01;36m\] \W\[\033[01;31m\]]\$\[\033[00m\] '
         else
-                PS1='\[\033[01;32m\][\u@\h\[\033[01;37m\] \W\[\033[01;32m\]]\$\[\033[00m\] '
+                PS1=$'\\[\\033[01;32m\\][\\u\u5350\\h\\[\\033[01;37m\\] \\W\\[\\033[01;32m\\]]\\$\\[\\033[00m\\] '
         fi
 
         alias ls='ls --color=auto'
@@ -95,9 +95,9 @@ if ${use_color} ; then
 else
         if [[ ${EUID} == 0 ]] ; then
                 # show root@ when we don't have colors
-                PS1='\u@\h \W \$ '
+                PS1=$'\\u\u5350\\h \\W \\$ '
         else
-                PS1='\u@\h \w \$ '
+                PS1=$'\\u\u5350\\h \\w \\$ '
         fi
 fi
 
