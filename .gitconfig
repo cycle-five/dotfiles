@@ -1,16 +1,21 @@
 [commit]
-        gpgsign = true
+    # gpgsign = true
+    sshsign = true
 [user]
-        email = cycle.five@proton.me
-        name = Cycle Five
+    email = cycle.five@proton.me
+    name = Cycle Five
+    # Comment out to use gpg
+    signingkey = /home/lothrop/.ssh/id_rsa
 [core]
-        editor = vim
+    editor = vim
 [filter "lfs"]
-        process = git-lfs filter-process
-        required = true
-        clean = git-lfs clean -- %f
-        smudge = git-lfs smudge -- %f
+    process = git-lfs filter-process
+    required = true
+    clean = git-lfs clean -- %f
+    smudge = git-lfs smudge -- %f
 [credential]
-        helper = store
+    helper = store
 [init]
-        defaultBranch = master
+    defaultBranch = master
+[gpg]
+    format = ssh
