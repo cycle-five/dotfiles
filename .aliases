@@ -3,6 +3,7 @@
 alias tma='tmux a'
 alias tmat='tmux a -t'
 alias tml='tmux ls'
+alias tmn='tmux new -s'
 # vim
 alias vim='nvim'
 alias v='vim'
