@@ -127,3 +127,37 @@ export PS1=$'%F{green}%n%f%F{white}\u5350%f%F{blue}%m%f %F{blue}%1~%f '
 #else
 #	PS1=$'\\[\\033[01;32m\\][\\u\u5350\\h\\[\\033[01;37m\\] \\W\\[\\033[01;32m\\]]\\$\\[\\033[00m\\] '
 #fi
+
+#
+# env variables for Twitter API
+#
+export CLIENT_ID="..."
+export CLIENT_SECRET="..."
+#export APP_BEARER_TOKEN="..."
+export API_ID="..."
+export API_SECRET="..."
+
+#
+# discord apps
+#
+export DISCORD_TOKEN="..."
+export GUILD_ID="..."
+
+# ChatGPT
+export OPENAI_API_KEY="..."
+
+#
+# Spotify
+#
+export SPOTIFY_CLIENT_ID="..."
+export SPOTIFY_CLIENT_SECRET="..."
+
+# old gcc
+# export PATH=$PATH:/opt/gcc-arm-none-eabi/bin
+
+# Go
+export PATH="${PATH}:/usr/local/go/bin"
+
+# Personal bins, these go last in the file and first in the path
+export PATH="$HOME/bin:$PATH"
+export PATH="$HOME/.bin:$PATH"
