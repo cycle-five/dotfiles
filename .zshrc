@@ -139,6 +139,24 @@ function cycle_greek_alphabet() {
     fi
 }
 
+# Function to pick a random Greek letter based on the current time
+random_greek_letter() {
+    local current_time index
+    # Get the current time in seconds
+    current_time=$(date +%s)
+
+    # Use the current time to seed the random number generator
+    RANDOM=$current_time
+
+    # Compute the index of the Greek letter
+    index=$((RANDOM % ${#greek_alphabet[@]}))
+
+    # Print the selected Greek letter
+    echo -n "${greek_alphabet[index]}"
+}
+
+
+
 
 
 # Update your prompt command to call this function
@@ -150,7 +168,7 @@ setopt PROMPT_SUBST
 # export PROMPT='%n%F{green}%*%f %@{purple}%m%f %1~{red}${vcs_info_msg_0_}% '
 # export PS1='%F{green}%n%f%F{white}\U5350%f%F{blue}%m%f %F{blue}%1~%f '
 # export PS1=$'%F{green}%n%f%F{white}\u5350%f%F{blue}%m%f %F{blue}%1~%f '
-export PS1='%F{green}%n%f%F{white}$(cycle_greek_alphabet)%f%F{blue}%m%f %F{blue}%1~%f '
+export PS1='%F{green}%n%f%F{white}($(random_greek_letter))%f%F{blue}%m%f %F{blue}%1~%f '
 #if [[ ${EUID} == 0 ]] ; then
 #	PS1='\[\033[01;31m\][\h\[\033[01;36m\] \W\[\033[01;31m\]]\$\[\033[00m\] '
 #else
