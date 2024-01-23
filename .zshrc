@@ -64,6 +64,7 @@ COMPLETION_WAITING_DOTS="true"
 # or set a custom format using the strftime function format specifications,
 # see 'man strftime' for details.
 HIST_STAMPS="mm/dd/yyyy"
+export HISTFILE="${HOME}/.zsh_eternal_history"
 
 # Would you like to use another custom folder than $ZSH/custom?
 # ZSH_CUSTOM=/path/to/new-custom-folder
@@ -127,7 +128,7 @@ greek_index=0
 # Function to cycle through the Greek alphabet
 function cycle_greek_alphabet() {
     # Print the current Greek letter
-    ret="${greek_alphabet[$greek_index]}"
+    printf "%s" "${greek_alphabet[$greek_index]}"
 
     # Increment the index
     ((greek_index++))
@@ -136,9 +137,9 @@ function cycle_greek_alphabet() {
     if ((greek_index >= ${#greek_alphabet[@]})); then
         greek_index=0
     fi
-
-    ret
 }
+
+
 
 # Update your prompt command to call this function
 # For example:
@@ -187,5 +188,5 @@ export SPOTIFY_CLIENT_SECRET="..."
 export PATH="${PATH}:/usr/local/go/bin"
 
 # Personal bins, these go last in the file and first in the path
-export PATH="$HOME/bin:$PATH"
-export PATH="$HOME/.bin:$PATH"
+export PATH="${HOME}/bin:${PATH}"
+export PATH="${HOME}/.bin:${PATH}"

@@ -17,6 +17,38 @@
 
 [[ $- != *i* ]] && return
 
+greek_alphabet=('α' 'β' 'γ' 'δ' 'ε' 'ζ' 'η' 'θ' 'ι' 'κ' 'λ' 'μ' 'ν' 'ξ' 'ο' 'π' 'ρ' 'σ' 'τ' 'υ' 'φ' 'χ' 'ψ' 'ω')
+greek_index=0
+
+cycle_greek_alphabet() {
+    echo -n "${greek_alphabet[greek_index]}"
+
+    ((greek_index++))
+
+    # Reset the index if it reaches the end of the array
+    if ((greek_index >= ${#greek_alphabet[@]})); then
+        greek_index=0
+    fi
+}
+
+# Function to pick a random Greek letter based on the current time
+random_greek_letter() {
+    # Get the current time in seconds
+    local current_time=$(date +%s)
+
+    # Use the current time to seed the random number generator
+    RANDOM=$current_time
+
+    # Compute the index of the Greek letter
+    local index=$((RANDOM % ${#greek_alphabet[@]}))
+
+    # Print the selected Greek letter
+    echo -n "${greek_alphabet[index]}"
+}
+
+
+
+
 colors() {
         local fgc bgc vals seq0
 
@@ -38,10 +70,10 @@ colors() {
 
                         seq0="${vals:+\e[${vals}m}"
                         printf "  %-9s" "${seq0:-(default)}"
-                        # printf " ${seq0}TEXT\e[m"
-                        printf " %sTEXT\e[m" "${seq0}"
-                        # printf " \e[${vals:+${vals+$vals;}}1mBOLD\e[m"
-                        printf " \e[%s1mBOLD\e[m" "${vals:+${vals+$vals;}}"
+                        printf " ${seq0}TEXT\e[m"
+                        # printf " %sTEXT\e[m" "${seq0}"
+                        printf " \e[${vals:+${vals+$vals;}}1mBOLD\e[m"
+                        # printf " \e[%s1mBOLD\e[m" "${vals:+${vals+$vals;}}"
                 done
                 echo; echo
         done
@@ -89,7 +121,7 @@ if ${use_color} ; then
         if [[ ${EUID} == 0 ]] ; then
                 PS1='\[\033[01;31m\][\h\[\033[01;36m\] \W\[\033[01;31m\]]\$\[\033[00m\] '
         else
-                PS1=$'\\[\\033[01;32m\\][\\u\u5350\\h\\[\\033[01;37m\\] \\W\\[\\033[01;32m\\]]\\$\\[\\033[00m\\] '
+                PS1=$'\\[\\033[01;32m\\][\\u\e[33m($(random_greek_letter))\e[m\\h\\[\\033[01;37m\\] \\W\\[\\033[01;32m\\]]\\$\\[\\033[00m\\] '
         fi
 
         alias ls='ls --color=auto'
@@ -209,6 +241,7 @@ export HISTTIMEFORMAT="[%F %T] "
 # Change the file location because certain bash sessions truncate .bash_history file upon close.
 # http://superuser.com/questions/575479/bash-history-truncated-to-500-lines-on-each-login
 export HISTFILE="$HOME/.bash_eternal_history"
+export HISTCONTROL=ignoreboth
 # Force prompt to write history after every command.
 # http://superuser.com/questions/20900/bash-history-loss
 export PROMPT_COMMAND="history -a; $PROMPT_COMMAND"
@@ -219,11 +252,21 @@ export PATH="$HOME/.local/bin:$PATH"
 # Rust
 export PATH="$HOME/.cargo/bin:$PATH"
 # shellcheck source=/dev/null
-. "$HOME/.cargo/env"
+[ -f "$HOME/.cargo/env" ] && . "$HOME/.cargo/env"
 
 # Haskell
 # shellcheck source=/dev/null
 [ -f "$HOME/.ghcup/env" ] && . "$HOME/.ghcup/env" # ghcup-env
+
+# old gcc
+# export PATH=$PATH:/opt/gcc-arm-none-eabi/bin
+
+# Go
+export PATH="${PATH}:/usr/local/go/bin"
+
+# Personal bins, these go last in the file and first in the path
+export PATH="${HOME}/bin:${PATH}"
+export PATH="${HOME}/.bin:${PATH}"
 
 #
 # env variables for Twitter API
@@ -249,12 +292,3 @@ export OPENAI_KEY="..."
 export SPOTIFY_CLIENT_ID="..."
 export SPOTIFY_CLIENT_SECRET="..."
 
-# old gcc
-# export PATH=$PATH:/opt/gcc-arm-none-eabi/bin
-
-# Go
-export PATH="${PATH}:/usr/local/go/bin"
-
-# Personal bins, these go last in the file and first in the path
-export PATH="$HOME/bin:$PATH"
-export PATH="$HOME/.bin:$PATH"
