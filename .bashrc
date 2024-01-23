@@ -33,14 +33,15 @@ cycle_greek_alphabet() {
 
 # Function to pick a random Greek letter based on the current time
 random_greek_letter() {
+    local current_time index
     # Get the current time in seconds
-    local current_time=$(date +%s)
+    current_time=$(date +%s)
 
     # Use the current time to seed the random number generator
     RANDOM=$current_time
 
     # Compute the index of the Greek letter
-    local index=$((RANDOM % ${#greek_alphabet[@]}))
+    index=$((RANDOM % ${#greek_alphabet[@]}))
 
     # Print the selected Greek letter
     echo -n "${greek_alphabet[index]}"
