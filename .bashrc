@@ -20,6 +20,7 @@
 colors() {
         local fgc bgc vals seq0
 
+        # shellcheck disable=SC2016
         printf "Color escapes are %s\n" '\e[${value};...;${value}m'
         printf "Values 30..37 are \e[33mforeground colors\e[m\n"
         printf "Values 40..47 are \e[43mbackground colors\e[m\n"
@@ -37,13 +38,16 @@ colors() {
 
                         seq0="${vals:+\e[${vals}m}"
                         printf "  %-9s" "${seq0:-(default)}"
-                        printf " ${seq0}TEXT\e[m"
-                        printf " \e[${vals:+${vals+$vals;}}1mBOLD\e[m"
+                        # printf " ${seq0}TEXT\e[m"
+                        printf " %sTEXT\e[m" "${seq0}"
+                        # printf " \e[${vals:+${vals+$vals;}}1mBOLD\e[m"
+                        printf " \e[%s1mBOLD\e[m" "${vals:+${vals+$vals;}}"
                 done
                 echo; echo
         done
 }
 
+# shellcheck source=/dev/null
 [ -r /usr/share/bash-completion/bash_completion ] && . /usr/share/bash-completion/bash_completion
 
 # Change the window title of X terminals
@@ -179,7 +183,8 @@ alias alert='notify-send --urgency=low -i "$([ $? = 0 ] && echo terminal || echo
 # See /usr/share/doc/bash-doc/examples in the bash-doc package.
 
 if [ -f ~/.bash_aliases ]; then
-    . ~/.bash_aliases
+    # shellcheck source=/dev/null
+    . "${HOME}/.bash_aliases"
 fi
 
 #
@@ -190,7 +195,8 @@ export PATH="${HOME}/.cargo/bin:${HOME}/.local/bin:/usr/local/sbin:/usr/local/bi
 # My aliases, I want to use .aliases instead of .bash_aliases because I will
 # want to switch to zsh at some point.
 if [ -f ~/.aliases ]; then
-    . ~/.aliases
+    # shellcheck source=/dev/null
+    . "${HOME}/.aliases"
 fi
 
 # Eternal bash history.
@@ -212,10 +218,12 @@ export PATH="$HOME/.local/bin:$PATH"
 
 # Rust
 export PATH="$HOME/.cargo/bin:$PATH"
+# shellcheck source=/dev/null
 . "$HOME/.cargo/env"
 
 # Haskell
-[ -f "$HOME/.ghcup/env" ] && source "$HOME/.ghcup/env" # ghcup-env
+# shellcheck source=/dev/null
+[ -f "$HOME/.ghcup/env" ] && . "$HOME/.ghcup/env" # ghcup-env
 
 #
 # env variables for Twitter API
