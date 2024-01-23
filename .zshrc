@@ -117,11 +117,38 @@ source "$HOME/.cargo/env"
 autoload -Uz vcs_info
 precmd() { vcs_info }
 
-# setopt PROMPT_SUBST
+# Define an array containing the Greek alphabet
+greek_alphabet=('α' 'β' 'γ' 'δ' 'ε' 'ζ' 'η' 'θ' 'ι' 'κ' 'λ' 'μ' 'ν' 'ξ' 'ο' 'π' 'ρ' 'σ' 'τ' 'υ' 'φ' 'χ' 'ψ' 'ω')
+
+# Initialize an index variable
+greek_index=0
+
+# Function to cycle through the Greek alphabet
+function cycle_greek_alphabet() {
+    # Print the current Greek letter
+    ret="${greek_alphabet[$greek_index]}"
+
+    # Increment the index
+    ((greek_index++))
+
+    # Reset the index if it reaches the end of the array
+    if ((greek_index >= ${#greek_alphabet[@]})); then
+        greek_index=0
+    fi
+
+    ret
+}
+
+# Update your prompt command to call this function
+# For example:
+# PROMPT='$(cycle_greek_alphabet) '
+
+setopt PROMPT_SUBST
 
 # export PROMPT='%n%F{green}%*%f %@{purple}%m%f %1~{red}${vcs_info_msg_0_}% '
 # export PS1='%F{green}%n%f%F{white}\U5350%f%F{blue}%m%f %F{blue}%1~%f '
-export PS1=$'%F{green}%n%f%F{white}\u5350%f%F{blue}%m%f %F{blue}%1~%f '
+# export PS1=$'%F{green}%n%f%F{white}\u5350%f%F{blue}%m%f %F{blue}%1~%f '
+export PS1='%F{green}%n%f%F{white}$(cycle_greek_alphabet)%f%F{blue}%m%f %F{blue}%1~%f '
 #if [[ ${EUID} == 0 ]] ; then
 #	PS1='\[\033[01;31m\][\h\[\033[01;36m\] \W\[\033[01;31m\]]\$\[\033[00m\] '
 #else
