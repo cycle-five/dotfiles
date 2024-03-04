@@ -223,7 +223,28 @@ fi
 #
 # } My stuff
 #
-export PATH="${HOME}/.cargo/bin:${HOME}/.local/bin:/usr/local/sbin:/usr/local/bin:/usr/bin:/usr/bin/site_perl:/usr/bin/vendor_perl:/usr/bin/core_perl:/var/lib/snapd/snap/bin"
+
+#
+# !!! Setup path. This part is very important. !!!
+#
+export PATH="/opt:/usr/local/sbin:/usr/local/bin:/usr/bin:/usr/bin/site_perl:/usr/bin/vendor_perl:/usr/bin/core_perl:/var/lib/snapd/snap/bin:${PATH}"
+
+# Common user installed bin location
+export PATH="${HOME}/.local/bin:${PATH}"
+
+# Rust
+export PATH="${HOME}/.cargo/bin:${PATH}"
+
+# old gcc
+# export PATH=$PATH:/opt/gcc-arm-none-eabi/bin
+
+# Go
+export PATH="/usr/local/go/bin:${PATH}"
+
+# Personal bins, these go last in the file and first in the path
+export PATH="${HOME}/bin:${PATH}"
+export PATH="${HOME}/.bin:${PATH}"
+
 
 # My aliases, I want to use .aliases instead of .bash_aliases because I will
 # want to switch to zsh at some point.
@@ -247,27 +268,12 @@ export HISTCONTROL=ignoreboth
 # http://superuser.com/questions/20900/bash-history-loss
 export PROMPT_COMMAND="history -a; $PROMPT_COMMAND"
 
-# Common user installed bin location
-export PATH="$HOME/.local/bin:$PATH"
-
-# Rust
-export PATH="$HOME/.cargo/bin:$PATH"
 # shellcheck source=/dev/null
 [ -f "$HOME/.cargo/env" ] && . "$HOME/.cargo/env"
 
 # Haskell
 # shellcheck source=/dev/null
 [ -f "$HOME/.ghcup/env" ] && . "$HOME/.ghcup/env" # ghcup-env
-
-# old gcc
-# export PATH=$PATH:/opt/gcc-arm-none-eabi/bin
-
-# Go
-export PATH="${PATH}:/usr/local/go/bin"
-
-# Personal bins, these go last in the file and first in the path
-export PATH="${HOME}/bin:${PATH}"
-export PATH="${HOME}/.bin:${PATH}"
 
 #
 # env variables for Twitter API
@@ -292,4 +298,8 @@ export OPENAI_KEY="..."
 #
 export SPOTIFY_CLIENT_ID="..."
 export SPOTIFY_CLIENT_SECRET="..."
+
+# local
+export LANG=en_US.UTF-8
+export LC_ALL=C
 

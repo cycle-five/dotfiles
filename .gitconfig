@@ -1,11 +1,10 @@
 [commit]
-    # gpgsign = true
-    sshsign = true
+    gpgsign = true
 [user]
     email = cycle.five@proton.me
     name = Cycle Five
     # Comment out to use gpg
-    signingkey = /home/lothrop/.ssh/id_rsa
+    # signingkey = /home/lothrop/.ssh/id_rsa
 [core]
     editor = vim
 [filter "lfs"]
@@ -17,5 +16,3 @@
     helper = store
 [init]
     defaultBranch = master
-[gpg]
-    format = ssh
