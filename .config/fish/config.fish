@@ -6,8 +6,14 @@ end
 set -x LC_ALL C.UTF-8
 set -x LANG C.UTF-8
 
+# CrackTunes random APIs
+set -x VIRUSTOTAL_API_KEY ...
+
 # Set the path for fnm, the node version manager
 set -x PATH /home/lothrop/.local/share/fnm $PATH
+
+# set -x PATH /usr/local/cuda/bin $PATH
+# set -x LD_LIBRARY_PATH /usr/local/cuda/lib64 $LD_LIBRARY_PATH
 
 # Set the path for cargo, the rust package manager
 
@@ -33,7 +39,7 @@ alias ssi='sudo snap install'
 alias ls='ls -alF --color=auto'
 # python
 alias ve='python3 -m venv ./venv'
-alias va='source ./venv/bin/activate'
+# alias va='source ./venv/bin/activate'
 
 # >>> conda initialize >>>
 # !! Contents within this block are managed by 'conda init' !!
